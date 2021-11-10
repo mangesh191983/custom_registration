@@ -1,0 +1,23 @@
+custom_registration.register_form:
+  path: '/custom_registration/form/register_form'
+  defaults:
+    _form: '\Drupal\custom_registration\Form\RegistrationForm'
+    _title: 'Registration Form'
+  requirements:
+    _access: 'TRUE'
+
+custom_registration.datalist:
+  path: /custom_registration/form/datalist'
+  defaults:
+    _controller: '\Drupal\custom_registration\Controller\Datalist::getrecord'
+    _title: 'Registration List'
+  requirements:
+    _access: 'TRUE' 
+
+custom_registration.register_form:
+  path: '/custom_registration/form/edit_register_form/{user}'
+  defaults:
+    _form: '\Drupal\custom_registration\Form\EditRegistrationForm'
+    _title: 'Registration Form'
+  requirements:
+    _access: 'TRUE'

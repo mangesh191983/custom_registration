@@ -1,0 +1,92 @@
+<?php
+/**
+ * Implements hook_schema().
+ *
+ */
+
+
+function custom_registration_schema()
+{	
+	$schema['custom_registration'] = array(
+	 'fields'=> array(
+      'id' => array(
+        'description' => 'ID primary',
+        'type' => 'serial',       
+        'not null' => TRUE,        
+      ),
+       'username' => array(
+        'description' => 'Username',
+        'type' =>   'varchar',  
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+
+      'first_name' => array(
+        'description' => 'First Name',
+        'type' =>   'varchar',  
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+
+      'last_name' => array(
+        'description' => 'Last name',
+        'type' =>   'varchar',  
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+
+       'city' => array(
+        'description' => 'City',
+        'type' =>   'varchar',  
+        'length' => 32,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+
+	  'country' => array(
+		        'description' => 'Country',
+		        'type' =>   'varchar',  
+		        'length' => 32,
+		        'not null' => FALSE,
+		        'default' => '',
+		      ),		 
+
+	  'state' => array(
+		        'description' => 'State',
+		        'type' =>   'varchar',  
+		        'length' => 32,
+		        'not null' => FALSE,
+		        'default' => '',
+		      ),
+
+       'gender' => array(
+        'description' => 'Gender',
+        'type' =>  'varchar',
+        'length' => 12,      
+        'not null' => FALSE,
+        'default' => '',
+      ),
+
+
+       'dob' => array(
+        'description' => 'Date Of Birth',
+	    'type' =>  'varchar',            
+	    'mysql_type' => 'date',
+        'not null' => FALSE,
+      ),
+
+       'created' => array(
+        'description' => 'User cretated on timestamp',
+        'type' =>  'int',
+        'not null' => TRUE,
+        'default' => '0',
+      ),
+	 ),	
+    'primary key' =>['id'],
+	);
+
+	return $schema;
+}

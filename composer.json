@@ -1,0 +1,13 @@
+{
+    "name": "custom_registration",
+    "type": "drupal-module",
+    "description": "Custom Registration",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/custom_registration",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/custom_registration",
+        "source": "http://cgit.drupalcode.org/custom_registration",
+    },
+}

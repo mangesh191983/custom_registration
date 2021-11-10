@@ -1,0 +1,4 @@
+services:
+  custom_registration.dboperation:
+    class: Drupal\custom_registration\services\DbOperation
+    arguments: ['@database']
