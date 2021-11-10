@@ -1,7 +1,12 @@
 <?php
 namespace Drupal\custom_registration\Controller;
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Database\Database;
+
+
+use Symfony\Component\HttpFoundation\Response;
+
 use Drupal\Core\Url;
 
 /**
@@ -14,10 +19,11 @@ class Datalist extends ControllerBase {
 
    protected $dataService;
 
+ 
   
    public function __construct()
-   {
-     $this->dataService = \Drupal::service('custom_registration.dboperation');
+   {   
+      $this->dataService = \Drupal::service('custom_registration.dboperation');
    }
   
 
@@ -29,36 +35,43 @@ class Datalist extends ControllerBase {
          $header = array(
          'id'=> t('SrNo'),
          'username' => t('User Name'),
-         'firstname' => t('Fist Name '),
-         'lastname' => t('Last Name'),
+         'first_name' => t('Fist Name '),
+         'last_name' => t('Last Name'),
          'gender' => t('Gender'),
          'opt' => t('operations'),
          );
 
 
-    $data = $this->dataService->getData_all();
+    $results = $this->dataService->getData_all();
+
+
+
+       $rows=array();
+
+
     
-    foreach($result as $data){
-        if ($data->id != 0 && $data->id != 1) {
+    foreach($results as $data){
+      
    
         $operate = '<a href="/custom_registration/form/edit_register_form/'.$data->id.'">Edit</a>|<a href="/custom_registration/delete_user/'.$data->id.'">delete</a>';
         //print the data from table
          $rows[$data->id] = array(
              'id' =>$data->id,
-             'name' => $data->name,
-             'firstname' => $data->firstname,
-             'lastname' => $data->lastname,            
-             'gender' => $data->gender,           
+             'name' => $data->username,
+             'firstname' => $data->first_name,
+             'lastname' => $data->last_name,            
+             'gender' => $data->gender,  
+             'opt' => $this->t($operate),    
            
          );
-        }
+        
     }
         //display data in site
          $form['table'] = [
          '#type' => 'table',
          '#header' => $header,
-     '#rows' => $rows,
-     '#empty' => t('No users found'),
+         '#rows' => $rows,
+         '#empty' => t('No users found'),
      ];
       // Finally add the pager.
         $form['pager'] = array(
@@ -68,5 +81,7 @@ class Datalist extends ControllerBase {
 
     }
 }
+
+
 
 ?>
