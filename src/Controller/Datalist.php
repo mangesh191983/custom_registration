@@ -51,9 +51,15 @@ class Datalist extends ControllerBase {
 
     
     foreach($results as $data){
-      
    
-        $operate = '<a href="/custom_registration/form/edit_register_form/'.$data->id.'">Edit</a>|<a href="/custom_registration/delete_user/'.$data->id.'">delete</a>';
+
+       $edit  = Url::fromUserInput('/custom_registration/form/edit_register_form/'.$data->id);
+       $delete = Url::fromUserInput('/custom_registration/form/delete_form/'.$data->id);
+
+        $operate = \Drupal::l('Delete', $delete)." ".\Drupal::l('Edit', $edit);
+
+
+
         //print the data from table
          $rows[$data->id] = array(
              'id' =>$data->id,

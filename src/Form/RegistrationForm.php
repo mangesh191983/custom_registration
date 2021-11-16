@@ -48,6 +48,7 @@ class RegistrationForm extends FormBase {
          'callback' => '::checkUserValidation',
          'effect' => 'fade',
          'event' => 'change',
+         'method' => 'replaceWith',
           'progress' => [
              'type' => 'throbber',
              'message' => NULL,
@@ -79,7 +80,7 @@ class RegistrationForm extends FormBase {
       '#required' => TRUE,
     ];
     $form['dob'] = [
-      '#type' => 'Date',
+      '#type' => 'date',
       '#title' => $this->t('Date Of Birth'),
       '#weight' => '0',
       '#required' => TRUE,
@@ -103,7 +104,7 @@ class RegistrationForm extends FormBase {
      $form['city'] = [
       '#type' => 'select',
       '#title' => $this->t('City'),
-      '#options' => ['Nashik' => $this->t('Gujart'), 'Mumbai' => $this->t('Mumbai')],
+      '#options' => ['Nashik' => $this->t('Nashik'), 'Mumbai' => $this->t('Mumbai')],
       '#size' => 1,
       '#weight' => '0',
       '#required' => TRUE,
@@ -123,13 +124,19 @@ class RegistrationForm extends FormBase {
     foreach ($form_state->getValues() as $key => $value) {
       // @TODO: Validate fields.
 
-      if (strlen($value) < 1) {
+    if (strlen($value) < 1) {
         $form_state->setErrorByName($key, $this->t('This field is required.'));
       }
 
+    $data = $this->dataService->getData_username($form_state->getValue('username'));
+
+    if (count($data)>0){       
+      $form_state->setErrorByName('username', $this->t('Username Already exists.'));
     }
+
     parent::validateForm($form, $form_state);
   }
+}
 
 
 
@@ -157,9 +164,19 @@ class RegistrationForm extends FormBase {
    $ajax_response = new AjaxResponse();
 
    $data = $this->dataService->getData_username($form_state->getValue('username'));
+
+  // return new Response('<pre>' . var_export($data, TRUE) . '</pre>');
+
+   if (count($data)>0){
+    
  
- 
-   $ajax_response->addCommand(new HtmlCommand('#user-result',$data));
+   $ajax_response->addCommand(new HtmlCommand('#user-result','Username '.$form_state->getValue('username').' Already exists.'));    
+   
+   }
+   else {
+     $ajax_response->addCommand(new HtmlCommand('#user-result',''));
+   }
+
    return $ajax_response;
    }
 
@@ -171,6 +188,8 @@ class RegistrationForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
        $query = $this->dataService->setData($form_state);
+        drupal_set_message("succesfully registerd");
+        $form_state->setRedirect('custom_registration.datalist');
   }
 
 }

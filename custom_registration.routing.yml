@@ -10,6 +10,23 @@ custom_registration.datalist:
   path: '/custom_registration/form/datalist'
   defaults:
     _controller: '\Drupal\custom_registration\Controller\Datalist::getrecord'
-    _title: 'Registration List'
+    _title: 'Registrations List'
   requirements:
-    _access: 'TRUE' 
+    _access: 'TRUE'
+
+custom_registration.edit_form:
+  path: '/custom_registration/form/edit_register_form/{user}'
+  defaults:
+    _form: '\Drupal\custom_registration\Form\EditRegistrationForm'
+    _title: 'Edit User'
+  requirements:
+    _access: 'TRUE'  
+
+custom_registration.delete_form:
+  path: '/custom_registration/form/delete_form/{user}'
+  defaults:
+    _form: '\Drupal\custom_registration\Form\DeleteForm'
+    _title: 'Delete Form'
+  requirements:
+    _access: 'TRUE'
+ 

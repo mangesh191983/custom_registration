@@ -34,8 +34,7 @@ class DbOperation {
            'country'=> $form_state->getValue('country'),
            'state'=> $form_state->getValue('state'),
            'city'=> $form_state->getValue('city'),
-           'dob'=> $form_state->getValue('dob'),        
-
+           'dob'=> $form_state->getValue('dob'),
            'created'=> time(),
        ))->execute();
    }
@@ -64,16 +63,44 @@ class DbOperation {
      $qry = $this->database->select('custom_registration','creg');
      $qry->condition('creg.username', $username, '=');
      $qry->fields('creg');
-     $data = $qry->execute()->rowCount();;
+     $data = $qry->execute()->fetchAll();
+     return $data;
+   }
+
+      public function getData_username_id($username,$uid)
+  {
+     $qry = $this->database->select('custom_registration','creg');
+     $qry->condition('creg.username', $username, '=');
+     $qry->condition('creg.id', $uid, '<>');
+     $qry->fields('creg');
+     $data = $qry->execute()->fetchAll();
      return $data;
    }
 
      public function deleteData_id($uid)
   {
-     $qry = $this->database->delete('custom_registration','creg');
-     $qry->condition('creg.id', $uid, '=');    
-     $data = $qry->execute();
-     return $data;
+     $qry = $this->database->delete('custom_registration');
+     $qry->condition('id', $uid, '=');    
+     $qry->execute();   
+   }
+
+
+   public function updateData_id($form_state,$uid)
+   {     
+          $this->database->update('custom_registration')
+     ->fields(array(
+           'username'=> $form_state->getValue('username'),
+           'first_name'=> $form_state->getValue('first_name'),
+           'last_name'=> $form_state->getValue('last_name'),
+           'gender'=> $form_state->getValue('gender'),
+           'country'=> $form_state->getValue('country'),
+           'state'=> $form_state->getValue('state'),
+           'city'=> $form_state->getValue('city'),
+           'dob'=> $form_state->getValue('dob'),       
+
+       ))->condition('id', $uid)->execute();
+
+
    }
 
 }
